@@ -1,0 +1,127 @@
+/*
+Trabalho do Grau A - Simulação de Crescimento Microbiano
+Aluno: Andrei Rafael Padilha Klohs
+Disciplina: Algoritmos e Programação: Fundamentos
+Objetivo: Simular o crescimento microbiano
+*/
+
+#include<stdio.h>
+#include<time.h>
+#include<stdlib.h>
+
+int main ()
+{
+    int escolhaUsuario,condicao,taxaCrescimento,numeroCiclos,populacaoInicial,populacao;
+    int cont = 1;
+
+    srand(time(0));
+
+    //Etapa 1 - Exibir o Menu Inicial
+    printf("Bem vindo ao programa! Por gentileza, leia o menu abaixo\n");
+    printf("1 - Nova simulação\n");
+    printf("2 - Sair do programa\n");
+    printf("Digite a opção desejada: ");
+    scanf("%d",&escolhaUsuario);
+
+
+    if (escolhaUsuario == 2) //Esse aqui serve para finalizar o programa
+    {
+        printf("Certo, estamos encerrando o programa");
+
+        return 0;
+    }
+
+
+    if (escolhaUsuario ==1)
+    {
+        //Etapa 2 - Entrada dos Dados
+        printf("Qual a população inicial de bactérias? ");
+        scanf("%d",&populacaoInicial);
+
+        printf("Qual a taxa de crescimento da sua colÔnia? ");
+        scanf("%d",&taxaCrescimento);
+
+        printf("Qual o número de ciclos desejado? ");
+        scanf("%d",&numeroCiclos);
+
+
+        //Etapa 3 - Inicia a simulação do crescimento
+        populacao=populacaoInicial;
+
+        while (cont<=numeroCiclos) //Aqui já cumprimos a etapa do loop de simulação
+        {
+            populacao+=(populacao*taxaCrescimento/100); //Fiz uma breve alteração no fórmula
+
+            
+            //Etapa 4 - Simula condições ambientais e exibe o que aconteceu
+
+            condicao= 1+ rand() % 101;
+
+            if (condicao<20) // Quando ocorrer aumento de temperatura (20%)
+            {
+                populacao=populacao*0.7;
+
+                printf("Ocorreu um aumento da temperatura, que prejudicou sua colônia\n");
+            }
+
+            else if(condicao<35) // Quando ocorrer falta de nutrientes (15%)
+            {
+                populacao=populacao*0.75;
+
+                printf("Ocorreu uma falta de nutrientes, que prejudicou sua colônia\n");
+
+            }
+
+            else if(condicao<45) //Quando ocorrer excesso de umidade (10%)
+            {
+                populacao=populacao*0.8;
+
+                printf("Ocorreu um excesso de umidade, que prejudicou sua colônia\n");
+            }
+
+            else if(condicao<50) //Quando ocorrer ação de luz ultravioleta (5%)
+            {
+                populacao=populacao*0.5;
+
+                printf("Ocorreu a interferência de luz ultravioleta, que prejudicou sua colônia\n");
+
+            }
+
+            else if (condicao<60) //Quando ocorrer uma condição favorável (10%)
+            {
+                populacao=populacao*1.2;
+
+                printf("A sua população encontrou uma condição favorável\n"); 
+            }
+            else //Quando a população crescer normalmente (40%)
+            {
+                printf("Sua população cresceu normalmente\n");
+            }
+
+                //Etapa 5 - Faz a validação dos dados
+                if(populacao<1)
+                {
+                    printf("A população morreu, a simulação não pôde continuar\n");
+                    
+                    return 0;
+                }
+
+                printf("Ciclo %d - A sua população atual é de %d indivíduos\n\n",cont,populacao); //Exibe tamanho da população  
+        
+            cont ++;
+        }
+
+        //Exibe os resultados finais
+        printf("O seu número de ciclos chegou ao fim, a população final é de %d indivíduos após %d ciclos\n",populacao,numeroCiclos);
+
+    }
+
+
+    else //Caso o usuário tente dar uma de engraçadinho
+    {
+        printf("Por gentileza, digite uma opção válida");
+    }
+
+
+    return 0;
+}
